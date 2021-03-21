@@ -88,6 +88,11 @@ public class AddJFrame extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Add");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -255,6 +260,7 @@ public class AddJFrame extends javax.swing.JFrame {
         jLabel7.setVisible(true);
         jLabel8.setVisible(true);
         jLabel9.setVisible(true);
+        jLabel7.setText("Hourly Wage (Before Deductions)");
         pack();
     }//GEN-LAST:event_jRadioButton1ActionPerformed
     
@@ -267,8 +273,14 @@ public class AddJFrame extends javax.swing.JFrame {
         jLabel7.setVisible(true);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
+        jLabel7.setText("Annual Wage (Before Deductions)");
         pack();
     }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        super.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     
     // Adds information to storage file
@@ -282,29 +294,37 @@ public class AddJFrame extends javax.swing.JFrame {
                 addWarning("This employee number is already used");
             } else{
                 if(jRadioButton1.isSelected()){ // If PTE
+                    // adds to HT
                     PTE pte = new PTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()), Double.parseDouble(jTextField6.getText()), Double.parseDouble(jTextField7.getText()));
                     theHT.addToTable(pte);
-                    writer.write(jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + ",PTE" + "," + jTextField5.getText() + "," + jTextField6.getText() + "," + jTextField7.getText() + "\n");  
+                    // writes to file
+                    writer.write("PTE," + jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + "," + jTextField5.getText() + "," + jTextField6.getText() + "," + jTextField7.getText() + "\n");  
+                    // informs users
                     jLabel2.setVisible(true);
                     jLabel2.setText("Employee " + jTextField1.getText() + " successfully added");
                     jLabel2.setForeground(Color.green);
                     pack();
+                    new MainJFrame().addToMainTable(pte);
                 } else{ // If FTE
+                    // adds to HT
                     FTE fte = new FTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()));
                     theHT.addToTable(fte);
-                    writer.write(jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + ",FTE" + "," + jTextField5.getText() + "\n");  
+                    // writes to file
+                    writer.write("FTE," + jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + "," + jTextField5.getText() + "\n");  
+                    // informs users
                     jLabel2.setVisible(true);
                     jLabel2.setText("Employee " + jTextField1.getText() + " successfully added");
                     jLabel2.setForeground(Color.green);
                     pack();
+                    new MainJFrame().addToMainTable(fte);
                 }
             }                                             
             writer.flush();  
             writer.close(); 
-            
         } catch(Exception e){
             
         }
+        
     }
     
     
@@ -342,9 +362,6 @@ public class AddJFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AddJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        String file = new File("Employees.txt").getAbsolutePath();
-        PrintWriter writer = new PrintWriter(file);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

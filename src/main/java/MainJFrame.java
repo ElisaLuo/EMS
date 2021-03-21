@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.util.*;
+import java.io.*;
+import javax.swing.table.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,10 +17,66 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
+    
+    private MyHashTable theHT = new MyHashTable(10);
+    private int empCount = 0;
+    
     public MainJFrame() {
         initComponents();
+        loadTable();
+        jLabel2.setText("Employee Count: " + Integer.toString(empCount));
+        jTextField5.setVisible(false);
+        jTextField6.setVisible(false);
+        jTextField7.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+        jLabel10.setVisible(false);
+        jLabel11.setVisible(false);
     }
 
+    // Loads information from storage file to hashtable
+    private void loadTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        try{
+            // Get File Location
+            String file = new File("Employees.txt").getAbsolutePath();
+            FileReader fileReader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String currentLine = reader.readLine();
+            while(currentLine != null){
+                String[] id = currentLine.split(",");
+                if(id[0].equals("FTE")){
+                    FTE fte = new FTE(Integer.parseInt(id[1]), id[2], id[3], Double.parseDouble(id[4]), Double.parseDouble(id[5]));
+                    theHT.addToTable(fte);
+                    empCount++;
+                    model.addRow(new Object[]{id[1], id[2], id[3], id[0]});
+                } else{
+                    PTE pte = new PTE(Integer.parseInt(id[1]), id[2], id[3], Double.parseDouble(id[4]), Double.parseDouble(id[5]), Double.parseDouble(id[6]), Double.parseDouble(id[7]));
+                    theHT.addToTable(pte);
+                    empCount++;
+                    model.addRow(new Object[]{id[1], id[2], id[3], id[0]});
+                }
+                currentLine = reader.readLine();
+            }
+            reader.close();
+            
+        } catch(Exception e){
+            
+        }
+    }
+    
+    public void addToMainTable(EmployeeInfo emp){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if(emp instanceof FTE){
+            model.addRow(new Object[]{emp.empNumber, emp.firstName, emp.lastName, "FTE"});
+        } else{
+            model.addRow(new Object[]{emp.empNumber, emp.firstName, emp.lastName, "PTE"});
+        }
+        empCount++;
+        jLabel2.setText("Employee Count: " + Integer.toString(empCount));
+        pack();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,6 +86,29 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jTextField6 = new javax.swing.JTextField();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jTextField7 = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -33,19 +116,174 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame1.setPreferredSize(null);
+        jFrame1.setSize(new java.awt.Dimension(0, 0));
 
+        jLabel3.setText("Employee Number");
+        jLabel3.setToolTipText("The Employee Number should be an unique six digit number. Can be automatically generated or inputted.");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel4.setText("Add Employee");
+
+        jLabel5.setText("First Name");
+
+        jLabel6.setText("Last Name");
+
+        jLabel7.setText("Deduction Rate");
+        jLabel7.setToolTipText("Deductions Rate of the employee. Should be inputted in decimal format (of the percentage).");
+
+        jButton3.setText("Generate");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("Part Time");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Full Time");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Wage (Before Deductions)");
+        jLabel8.setToolTipText("Hourly wage for part time employees. Annual salary for full time employees.");
+
+        jLabel9.setText("jLabel2");
+
+        jLabel10.setText("Hours Per Week");
+
+        jButton4.setText("Cancel");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Weeks Per Year");
+
+        jButton5.setText("Add");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
+                    .addComponent(jTextField2)
+                    .addComponent(jTextField3)
+                    .addComponent(jTextField4)
+                    .addComponent(jTextField5)
+                    .addComponent(jTextField6)
+                    .addComponent(jTextField7)
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel4)
+                            .addGroup(jFrame1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton2))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9))
+                        .addGap(0, 226, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame1Layout.createSequentialGroup()
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)))
+                .addContainerGap())
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addGap(22, 22, 22))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Employee Number", "First Name", "Last Name", "Employment Type"
             }
         ));
+        jTable1.setRowHeight(20);
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Add Employee");
@@ -106,16 +344,140 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        AddJFrame addJFrame = new AddJFrame();
-        addJFrame.setVisible(true);
+        //AddJFrame addJFrame = new AddJFrame();
+        //addJFrame.setVisible(true);
+        jFrame1.setVisible(true);
+        jFrame1.pack();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         SearchJFrame searchJFrame = new SearchJFrame();
         searchJFrame.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        // Generates Random Number
+        int empNum = new Random().nextInt(900000) + 100000;
+        while (theHT.isInTable(empNum)){
+            empNum = new Random().nextInt(900000) + 100000;
+        }
+        jTextField1.setText(Integer.toString(empNum));
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        jTextField5.setVisible(true);
+        jTextField6.setVisible(true);
+        jTextField7.setVisible(true);
+        jLabel11.setVisible(true);
+        jLabel8.setVisible(true);
+        jLabel10.setVisible(true);
+        jLabel8.setText("Hourly Wage (Before Deductions)");
+        jFrame1.pack();
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextField5.setVisible(true);
+        jTextField6.setVisible(false);
+        jTextField7.setVisible(false);
+        jLabel8.setVisible(true);
+        jLabel11.setVisible(false);
+        jLabel10.setVisible(false);
+        jLabel8.setText("Annual Wage (Before Deductions)");
+        jFrame1.pack();
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        super.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        // If top section is not filled in
+        if(jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("")){
+            addWarning("Please fill in all fields");
+        } else{ // If top section is filled in
+            if(jRadioButton1.isSelected()){ // If PTE
+                if(jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("")){ // If not everything is filled in
+                    addWarning("Please fill in all fields");
+                } else{
+                    addToFile();
+                }
+            } else if (jRadioButton2.isSelected()){ // If FTE
+                if(jTextField5.getText().equals("")){ // If not everything is filled in
+                    addWarning("Please fill in all fields");
+                } else{
+                    addToFile();
+                }
+            } else{ // If Employee Type not selected
+                addWarning("Please fill in all fields");
+            }
+        }
+        jFrame1.pack();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    // Adds information to storage file
+    private void addToFile(){
+        try{
+            // Get File Location
+            String file = new File("Employees.txt").getAbsolutePath();
+            FileWriter fileWriter = new FileWriter(file, true);
+            PrintWriter writer = new PrintWriter(fileWriter);
+            if(theHT.isInTable(Integer.parseInt(jTextField1.getText()))){
+                addWarning("This employee number is already used");
+            } else{
+                if(jRadioButton1.isSelected()){ // If PTE
+                    // adds to HT
+                    PTE pte = new PTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()), Double.parseDouble(jTextField6.getText()), Double.parseDouble(jTextField7.getText()));
+                    theHT.addToTable(pte);
+                    // writes to file
+                    writer.write("PTE," + jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + "," + jTextField5.getText() + "," + jTextField6.getText() + "," + jTextField7.getText() + "\n");  
+                    // informs users
+                    jLabel9.setVisible(true);
+                    jLabel9.setText("Employee " + jTextField1.getText() + " successfully added");
+                    jLabel9.setForeground(Color.green);
+                    pack();
+                    addToMainTable(pte);
+                } else{ // If FTE
+                    // adds to HT
+                    FTE fte = new FTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()));
+                    theHT.addToTable(fte);
+                    // writes to file
+                    writer.write("FTE," + jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + "," + jTextField5.getText() + "\n");  
+                    // informs users
+                    jLabel9.setVisible(true);
+                    jLabel9.setText("Employee " + jTextField1.getText() + " successfully added");
+                    jLabel9.setForeground(Color.green);
+                    pack();
+                    addToMainTable(fte);
+                }
+            }                                             
+            writer.flush();  
+            writer.close(); 
+        } catch(Exception e){
+            
+        }
+        
+    }
+    
+    
+    // Warning if missing information
+    private void addWarning(String warning){
+        jLabel9.setVisible(true);
+        jLabel9.setText(warning);
+        jLabel9.setForeground(Color.red);
+        jFrame1.pack();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -153,11 +515,34 @@ public class MainJFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }
