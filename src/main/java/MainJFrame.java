@@ -143,15 +143,20 @@ public class MainJFrame extends javax.swing.JFrame {
         jTextField14 = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        jDialog1 = new javax.swing.JDialog();
+        jLabel23 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame1.setPreferredSize(null);
+        jFrame1.setTitle("Add Employee");
         jFrame1.setSize(new java.awt.Dimension(0, 0));
 
         jLabel3.setText("Employee Number");
@@ -301,6 +306,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        jFrame2.setTitle("Search & Edit");
+
         jLabel12.setText("Last Name");
 
         jLabel13.setText("jLabel2");
@@ -311,11 +318,27 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel15.setText("Weeks Per Year");
 
         jButton6.setText("Cancel");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel16.setText("Deduction Rate");
         jLabel16.setToolTipText("Deductions Rate of the employee. Should be inputted in decimal format (of the percentage).");
 
+        jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField11KeyTyped(evt);
+            }
+        });
+
         jButton7.setText("Save");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Search");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -332,17 +355,38 @@ public class MainJFrame extends javax.swing.JFrame {
 
         buttonGroup2.add(jRadioButton3);
         jRadioButton3.setText("Part Time");
+        jRadioButton3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jRadioButton3FocusGained(evt);
+            }
+        });
 
         jLabel19.setText("First Name");
 
         buttonGroup2.add(jRadioButton4);
         jRadioButton4.setText("Full Time");
+        jRadioButton4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jRadioButton4FocusGained(evt);
+            }
+        });
 
         jButton9.setText("Remove");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel20.setText("Hours Per Week");
 
-        jLabel21.setText("Wage (After Deductions): ");
+        jLabel21.setText("Annual Wage (After Deductions): ");
+
+        jTextField13.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField13KeyTyped(evt);
+            }
+        });
 
         jLabel22.setText("$0");
 
@@ -377,11 +421,7 @@ public class MainJFrame extends javax.swing.JFrame {
                             .addComponent(jLabel16)
                             .addComponent(jLabel15)
                             .addComponent(jLabel20)
-                            .addComponent(jLabel13)
-                            .addGroup(jFrame2Layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13))
                         .addGap(0, 127, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -389,7 +429,11 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
+                        .addComponent(jButton6))
+                    .addGroup(jFrame2Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jFrame2Layout.setVerticalGroup(
@@ -445,10 +489,60 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        jDialog1.setTitle("Warning");
+        jDialog1.setPreferredSize(new java.awt.Dimension(550, 165));
+        jDialog1.setResizable(false);
+        jDialog1.setSize(new java.awt.Dimension(550, 170));
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel23.setText("jLabel23");
+
+        jButton11.setText("No");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jButton12.setText("Yes");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addContainerGap(410, Short.MAX_VALUE)
+                .addComponent(jButton12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11)
+                .addGap(24, 24, 24))
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel23)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton11)
+                    .addComponent(jButton12))
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Employee Management System");
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -483,6 +577,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Employee Count:");
 
+        jButton10.setText("Refresh Table");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -493,7 +594,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addComponent(jButton10)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -509,7 +612,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jButton10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -533,11 +637,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jFrame2.setVisible(true);
         jFrame2.pack();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    // Rewrite file
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosed
 
     //--------------------------------Add Employee Frame-------------------------------------------
     
@@ -584,7 +683,7 @@ public class MainJFrame extends javax.swing.JFrame {
         super.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    // Add Button Pressed
+    // If Add Button Pressed
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         // If top section is not filled in
@@ -610,44 +709,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jFrame1.pack();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    // Search Button Clicked
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        int currentEmpNum = Integer.parseInt(jTextField10.getText());
-        if(theHT.isInTable(currentEmpNum)){
-            jLabel12.setVisible(true);
-            jLabel13.setVisible(false);
-            jLabel15.setVisible(true);
-            jLabel16.setVisible(true);
-            jLabel18.setVisible(true);
-            jLabel19.setVisible(true);
-            jLabel20.setVisible(true);
-            jLabel21.setVisible(true);
-            jLabel22.setVisible(true);
-            jTextField8.setVisible(true);
-            jTextField9.setVisible(true);
-            jTextField9.setText(theHT.getFromTable(currentEmpNum).lastName);
-            jTextField11.setVisible(true);
-            jTextField11.setText(Double.toString(theHT.getFromTable(currentEmpNum).deductRate));
-            jTextField12.setVisible(true);
-            jTextField13.setVisible(true);
-            jTextField14.setVisible(true);
-            jTextField14.setText(theHT.getFromTable(currentEmpNum).firstName);
-            jRadioButton3.setVisible(true);
-            jRadioButton4.setVisible(true);
-            jFrame2.pack();
-        } else{
-            addWarning("This employee does not exist", 1);
-        }
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    // Adds information to storage file
+    // Adds information to hashtable / storage file
     private void addToFile(){
-        try{
-            // Get File Location
-            String file = new File("Employees.txt").getAbsolutePath();
-            FileWriter fileWriter = new FileWriter(file, true);
-            PrintWriter writer = new PrintWriter(fileWriter);
             if(theHT.isInTable(Integer.parseInt(jTextField1.getText()))){
                 addWarning("This employee number is already used", 0);
             } else{
@@ -655,37 +718,27 @@ public class MainJFrame extends javax.swing.JFrame {
                     // adds to HT
                     PTE pte = new PTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()), Double.parseDouble(jTextField6.getText()), Double.parseDouble(jTextField7.getText()));
                     theHT.addToTable(pte);
-                    // writes to file
-                    writer.write("PTE," + jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + "," + jTextField5.getText() + "," + jTextField6.getText() + "," + jTextField7.getText() + "\n");  
                     // informs users
                     jLabel9.setVisible(true);
                     jLabel9.setText("Employee " + jTextField1.getText() + " successfully added");
-                    jLabel9.setForeground(Color.green);
+                    jLabel9.setForeground(Color.green.darker());
                     pack();
                     addToMainTable(pte);
                 } else{ // If FTE
                     // adds to HT
                     FTE fte = new FTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()));
                     theHT.addToTable(fte);
-                    // writes to file
-                    writer.write("FTE," + jTextField1.getText() + "," + jTextField2.getText() + "," +jTextField3.getText() + "," +jTextField4.getText() + "," + jTextField5.getText() + "\n");  
                     // informs users
                     jLabel9.setVisible(true);
                     jLabel9.setText("Employee " + jTextField1.getText() + " successfully added");
-                    jLabel9.setForeground(Color.green);
+                    jLabel9.setForeground(Color.green.darker());
                     pack();
                     addToMainTable(fte);
                 }
-            }                                             
-            writer.flush();  
-            writer.close(); 
-        } catch(Exception e){
-            
-        }
-        
+            }  
     }
     
-    // To update the main employee table
+    // Updates the main employee table
     public void addToMainTable(EmployeeInfo emp){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         if(emp instanceof FTE){
@@ -696,6 +749,263 @@ public class MainJFrame extends javax.swing.JFrame {
         empCount++;
         jLabel2.setText("Employee Count: " + Integer.toString(empCount));
         pack();
+    }
+    
+    //--------------------------------Search Employee Frame-------------------------------------------
+    
+    // Search Button Clicked
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        int currentEmpNum = Integer.parseInt(jTextField10.getText());
+        if(theHT.isInTable(currentEmpNum)){
+            jLabel13.setVisible(false);
+            
+            jLabel19.setVisible(true);
+            jTextField14.setVisible(true);
+            jTextField14.setText(theHT.getFromTable(currentEmpNum).firstName);
+            jLabel12.setVisible(true);
+            jTextField9.setVisible(true);
+            jTextField9.setText(theHT.getFromTable(currentEmpNum).lastName);
+            jLabel16.setVisible(true);
+            jTextField11.setVisible(true);
+            jTextField11.setText(Double.toString(theHT.getFromTable(currentEmpNum).deductRate));
+            
+            jRadioButton3.setVisible(true);
+            jRadioButton4.setVisible(true);
+            if(theHT.getFromTable(currentEmpNum) instanceof FTE){
+                FTE fte = (FTE) theHT.getFromTable(currentEmpNum);
+                jRadioButton4.setSelected(true);
+                jLabel18.setVisible(true);
+                jLabel18.setText("Annual Wage (Before Deduction)");
+                jTextField13.setVisible(true);
+                jTextField13.setText(String.format("%.0f",fte.getYearlySalary()));
+                jLabel21.setVisible(true);
+                jLabel22.setVisible(true);
+                jLabel22.setText("$ "+String.format("%.0f",fte.calcAnnualNetIncome()));
+                jLabel20.setVisible(false);
+                jTextField8.setVisible(false);
+                jLabel15.setVisible(false);
+                jTextField12.setVisible(false);
+                jFrame2.pack();
+            } else{
+                PTE pte = (PTE) theHT.getFromTable(currentEmpNum);
+                jRadioButton3.setSelected(true);
+                jLabel18.setVisible(true);
+                jLabel18.setText("Weekly Wage (Before Deduction)");
+                jTextField13.setVisible(true);
+                jTextField13.setText(String.format("%.0f",pte.getWeeklySalary()));
+                jLabel21.setVisible(true);
+                jLabel22.setVisible(true);
+                jLabel22.setText("$ "+String.format("%.0f", pte.calcAnnualNetIncome()));
+                jLabel20.setVisible(true);
+                jTextField8.setVisible(true);
+                jTextField8.setText(String.format("%.0f",pte.hourlyWage));
+                jLabel15.setVisible(true);
+                jTextField12.setVisible(true);
+                jTextField12.setText(String.format("%.0f",pte.hoursPerWeek));
+                jFrame2.pack();
+            }
+        } else{
+            jLabel12.setVisible(false);
+            jLabel13.setVisible(false);
+            jLabel15.setVisible(false);
+            jLabel16.setVisible(false);
+            jLabel18.setVisible(false);
+            jLabel19.setVisible(false);
+            jLabel20.setVisible(false);
+            jLabel21.setVisible(false);
+            jLabel22.setVisible(false);
+            jTextField8.setVisible(false);
+            jTextField9.setVisible(false);
+            jTextField11.setVisible(false);
+            jTextField12.setVisible(false);
+            jTextField13.setVisible(false);
+            jTextField14.setVisible(false);
+            jRadioButton3.setVisible(false);
+            jRadioButton4.setVisible(false);
+            addWarning("This employee does not exist", 1);
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+    
+    // Cancel button clicked
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        jFrame2.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    // Remove button clicked
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        int currentEmpNum = Integer.parseInt(jTextField10.getText());
+        if(theHT.isInTable(currentEmpNum)){
+            jLabel23.setText("Are you sure you want to permanently remove Employee "+Integer.toString(currentEmpNum));
+            jDialog1.setVisible(true);
+        } else{
+            jLabel12.setVisible(false);
+            jLabel13.setVisible(false);
+            jLabel15.setVisible(false);
+            jLabel16.setVisible(false);
+            jLabel18.setVisible(false);
+            jLabel19.setVisible(false);
+            jLabel20.setVisible(false);
+            jLabel21.setVisible(false);
+            jLabel22.setVisible(false);
+            jTextField8.setVisible(false);
+            jTextField9.setVisible(false);
+            jTextField11.setVisible(false);
+            jTextField12.setVisible(false);
+            jTextField13.setVisible(false);
+            jTextField14.setVisible(false);
+            jRadioButton3.setVisible(false);
+            jRadioButton4.setVisible(false);
+            addWarning("This employee does not exist", 1);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    // Save button clicked
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        int currentEmpNum = Integer.parseInt(jTextField10.getText());
+        if(theHT.isInTable(currentEmpNum)){
+            if(theHT.getFromTable(currentEmpNum) instanceof FTE){
+                FTE fte = new FTE(currentEmpNum, jTextField14.getText(), jTextField9.getText(), Double.parseDouble(jTextField11.getText()), Double.parseDouble(jTextField13.getText()));
+                theHT.removeFromTable(currentEmpNum);
+                theHT.addToTable(fte);
+            } else{
+                PTE pte = new PTE(currentEmpNum, jTextField14.getText(), jTextField9.getText(), Double.parseDouble(jTextField11.getText()), Double.parseDouble(jTextField13.getText()), Double.parseDouble(jTextField8.getText()), Double.parseDouble(jTextField12.getText()));
+                theHT.removeFromTable(currentEmpNum);
+                theHT.addToTable(pte);
+            }
+            jLabel13.setVisible(true);
+            jLabel13.setText("Changes to Employee "+Integer.toString(currentEmpNum)+ " successfully saved.");
+            jLabel13.setForeground(Color.green.darker());
+        } else{
+            jLabel12.setVisible(false);
+            jLabel13.setVisible(false);
+            jLabel15.setVisible(false);
+            jLabel16.setVisible(false);
+            jLabel18.setVisible(false);
+            jLabel19.setVisible(false);
+            jLabel20.setVisible(false);
+            jLabel21.setVisible(false);
+            jLabel22.setVisible(false);
+            jTextField8.setVisible(false);
+            jTextField9.setVisible(false);
+            jTextField11.setVisible(false);
+            jTextField12.setVisible(false);
+            jTextField13.setVisible(false);
+            jTextField14.setVisible(false);
+            jRadioButton3.setVisible(false);
+            jRadioButton4.setVisible(false);
+            addWarning("This employee does not exist", 1);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    // Refresh Table
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    // Cancel remove prompt
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        jDialog1.dispose();
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    // Confirm remove prompt
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+        int currentEmpNum = Integer.parseInt(jTextField10.getText());
+        theHT.removeFromTable(currentEmpNum);
+        jLabel12.setVisible(false);
+        jLabel13.setVisible(false);
+        jLabel15.setVisible(false);
+        jLabel16.setVisible(false);
+        jLabel18.setVisible(false);
+        jLabel19.setVisible(false);
+        jLabel20.setVisible(false);
+        jLabel21.setVisible(false);
+        jLabel22.setVisible(false);
+        jTextField8.setVisible(false);
+        jTextField9.setVisible(false);
+        jTextField11.setVisible(false);
+        jTextField12.setVisible(false);
+        jTextField13.setVisible(false);
+        jTextField14.setVisible(false);
+        jRadioButton3.setVisible(false);
+        jRadioButton4.setVisible(false);
+        addWarning("Employee "+Integer.toString(currentEmpNum)+" successfully removed.", 1);
+        jDialog1.dispose();
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jTextField13KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyTyped
+        // TODO add your handling code here:
+        calcSalary();
+    }//GEN-LAST:event_jTextField13KeyTyped
+
+    private void jTextField11KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyTyped
+        // TODO add your handling code here:
+        calcSalary();
+    }//GEN-LAST:event_jTextField11KeyTyped
+
+    // PTE
+    private void jRadioButton3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jRadioButton3FocusGained
+        // TODO add your handling code here:
+        jLabel18.setText("Hourly Wage (Before Deductions)");
+        jLabel20.setVisible(true);
+        jTextField8.setVisible(true);
+        jTextField8.setText("0");
+        jLabel15.setVisible(true);
+        jTextField12.setVisible(true);
+        jTextField12.setText("0");
+        jFrame2.pack();
+    }//GEN-LAST:event_jRadioButton3FocusGained
+
+    
+    // FTE
+    private void jRadioButton4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jRadioButton4FocusGained
+        // TODO add your handling code here:
+        jLabel18.setText("Annual Wage (Before Deductions)");
+        jLabel20.setVisible(false);
+        jTextField8.setVisible(false);
+        jLabel15.setVisible(false);
+        jTextField12.setVisible(false);
+        jFrame2.pack();
+    }//GEN-LAST:event_jRadioButton4FocusGained
+
+    // When main window closes
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        ArrayList<EmployeeInfo> allEmp = theHT.returnAllEmp();
+        // Overwrite storage file with updated "theHT"
+        try{
+            // Get File Location
+            String file = new File("Employees.txt").getAbsolutePath();
+            FileWriter fileWriter = new FileWriter(file, false);
+            PrintWriter writer = new PrintWriter(fileWriter);
+            for(int i = 0; i < allEmp.size(); i++){
+                if(allEmp.get(i) instanceof PTE){
+                    PTE temp = (PTE) allEmp.get(i);
+                    writer.write("PTE,"+Integer.toString(temp.empNumber)+","+temp.firstName+","+temp.lastName+","+Double.toString(temp.deductRate)+","+Double.toString(temp.hourlyWage)+","+Double.toString(temp.hoursPerWeek)+","+Double.toString(temp.weeksPerYear)+"\n");
+                } else{
+                    FTE temp = (FTE) allEmp.get(i);
+                    writer.write("FTE,"+Integer.toString(temp.empNumber)+","+temp.firstName+","+temp.lastName+","+Double.toString(temp.deductRate)+","+Double.toString(temp.getYearlySalary())+"\n");
+                }
+            }                                                             
+            writer.flush();  
+            writer.close(); 
+        } catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    // Recalculates salary after deductions
+    private void calcSalary(){
+        if(jRadioButton3.isSelected()){
+            jLabel22.setText("$ " + Double.toString(Double.parseDouble(jTextField13.getText())*Double.parseDouble(jTextField8.getText())*Double.parseDouble(jTextField12.getText())*(1-Double.parseDouble(jTextField11.getText()))));
+        } else{
+            jLabel22.setText("$ " + Double.toString(Double.parseDouble(jTextField13.getText())*(1-Double.parseDouble(jTextField11.getText()))));
+        }
     }
     
     // Warning if missing information
@@ -710,13 +1020,8 @@ public class MainJFrame extends javax.swing.JFrame {
             jLabel13.setText(warning);
             jLabel13.setForeground(Color.red);
             jFrame2.pack();
-        }
-        
+        }  
     }
-    
-    //--------------------------------Search Employee Frame-------------------------------------------
-    
-    
     
     /**
      * @param args the command line arguments
@@ -758,6 +1063,9 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -766,6 +1074,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
@@ -783,6 +1092,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -129,6 +129,18 @@ public class MyHashTable {
 			}
 		}
 	}
+        
+        public ArrayList<EmployeeInfo> returnAllEmp(){
+            ArrayList<EmployeeInfo> allEmp = new ArrayList<EmployeeInfo>();
+            for(int i = 0; i < buckets.length; i++){
+                if(buckets[i].size() > 0){
+                    for(int j = 0; j < buckets[i].size(); j++){
+                        allEmp.add(buckets[i].get(j));
+                    }
+                }
+            }
+            return allEmp;
+        }
 
 
 }

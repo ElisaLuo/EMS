@@ -10,9 +10,9 @@
  */
 public class PTE extends EmployeeInfo {
     
-    private double hourlyWage;
-    private double hoursPerWeek;
-    private double weeksPerYear;
+    public double hourlyWage;
+    public double hoursPerWeek;
+    public double weeksPerYear;
 	
     public PTE(int eN, String fN, String lN, double dR, double hW, double hPW, double wPY) {
 	super(eN, fN, lN, dR);
@@ -22,8 +22,8 @@ public class PTE extends EmployeeInfo {
 		// TODO Auto-generated constructor stub
     }
     
-    public double getYearlySalary() {
-        return (hourlyWage*hoursPerWeek*weeksPerYear);
+    public double getWeeklySalary() {
+        return (hourlyWage);
     }
     
     
