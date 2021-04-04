@@ -85,6 +85,22 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
     
+    // Load table from hashtable
+    public void refreshTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        ArrayList<EmployeeInfo> allEmp = theHT.returnAllEmp();
+        for(int i = 0; i < allEmp.size(); i++){
+            EmployeeInfo currEmp = allEmp.get(i);
+            if(currEmp instanceof PTE){
+                model.addRow(new Object[]{Integer.toString(currEmp.empNumber), ((PTE) currEmp).firstName, ((PTE) currEmp).lastName, "PTE"});
+            } else{
+                model.addRow(new Object[]{Integer.toString(currEmp.empNumber), ((FTE) currEmp).firstName, ((FTE) currEmp).lastName, "FTE"});
+            }
+        }
+        jLabel2.setText("Employee Count: " + Integer.toString(allEmp.size()));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -308,6 +324,12 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jFrame2.setTitle("Search & Edit");
 
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField8KeyPressed(evt);
+            }
+        });
+
         jLabel12.setText("Last Name");
 
         jLabel13.setText("jLabel2");
@@ -328,8 +350,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel16.setToolTipText("Deductions Rate of the employee. Should be inputted in decimal format (of the percentage).");
 
         jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField11KeyTyped(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField11KeyPressed(evt);
             }
         });
 
@@ -349,6 +371,12 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel17.setText("Employee Number");
         jLabel17.setToolTipText("Unique six digit number assigned to every employee");
+
+        jTextField12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField12KeyPressed(evt);
+            }
+        });
 
         jLabel18.setText("Wage (Before Deductions)");
         jLabel18.setToolTipText("Hourly wage for part time employees. Annual salary for full time employees.");
@@ -383,8 +411,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel21.setText("Annual Wage (After Deductions): ");
 
         jTextField13.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField13KeyTyped(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField13KeyPressed(evt);
             }
         });
 
@@ -490,7 +518,6 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         jDialog1.setTitle("Warning");
-        jDialog1.setPreferredSize(new java.awt.Dimension(550, 165));
         jDialog1.setResizable(false);
         jDialog1.setSize(new java.awt.Dimension(550, 170));
 
@@ -680,7 +707,7 @@ public class MainJFrame extends javax.swing.JFrame {
     // If Cancel
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        super.dispose();
+        jFrame1.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     // If Add Button Pressed
@@ -723,7 +750,6 @@ public class MainJFrame extends javax.swing.JFrame {
                     jLabel9.setText("Employee " + jTextField1.getText() + " successfully added");
                     jLabel9.setForeground(Color.green.darker());
                     pack();
-                    addToMainTable(pte);
                 } else{ // If FTE
                     // adds to HT
                     FTE fte = new FTE(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), Double.parseDouble(jTextField4.getText()), Double.parseDouble(jTextField5.getText()));
@@ -733,22 +759,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     jLabel9.setText("Employee " + jTextField1.getText() + " successfully added");
                     jLabel9.setForeground(Color.green.darker());
                     pack();
-                    addToMainTable(fte);
                 }
             }  
-    }
-    
-    // Updates the main employee table
-    public void addToMainTable(EmployeeInfo emp){
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        if(emp instanceof FTE){
-            model.addRow(new Object[]{emp.empNumber, emp.firstName, emp.lastName, "FTE"});
-        } else{
-            model.addRow(new Object[]{emp.empNumber, emp.firstName, emp.lastName, "PTE"});
-        }
-        empCount++;
-        jLabel2.setText("Employee Count: " + Integer.toString(empCount));
-        pack();
     }
     
     //--------------------------------Search Employee Frame-------------------------------------------
@@ -791,7 +803,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 PTE pte = (PTE) theHT.getFromTable(currentEmpNum);
                 jRadioButton3.setSelected(true);
                 jLabel18.setVisible(true);
-                jLabel18.setText("Weekly Wage (Before Deduction)");
+                jLabel18.setText("Hourly Wage (Before Deduction)");
                 jTextField13.setVisible(true);
                 jTextField13.setText(String.format("%.0f",pte.getWeeklySalary()));
                 jLabel21.setVisible(true);
@@ -799,10 +811,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 jLabel22.setText("$ "+String.format("%.0f", pte.calcAnnualNetIncome()));
                 jLabel20.setVisible(true);
                 jTextField8.setVisible(true);
-                jTextField8.setText(String.format("%.0f",pte.hourlyWage));
+                jTextField8.setText(String.format("%.0f",pte.hoursPerWeek));
                 jLabel15.setVisible(true);
                 jTextField12.setVisible(true);
-                jTextField12.setText(String.format("%.0f",pte.hoursPerWeek));
+                jTextField12.setText(String.format("%.0f",pte.weeksPerYear));
                 jFrame2.pack();
             }
         } else{
@@ -867,7 +879,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         int currentEmpNum = Integer.parseInt(jTextField10.getText());
         if(theHT.isInTable(currentEmpNum)){
-            if(theHT.getFromTable(currentEmpNum) instanceof FTE){
+            if(jRadioButton4.isSelected()){
                 FTE fte = new FTE(currentEmpNum, jTextField14.getText(), jTextField9.getText(), Double.parseDouble(jTextField11.getText()), Double.parseDouble(jTextField13.getText()));
                 theHT.removeFromTable(currentEmpNum);
                 theHT.addToTable(fte);
@@ -899,11 +911,13 @@ public class MainJFrame extends javax.swing.JFrame {
             jRadioButton4.setVisible(false);
             addWarning("This employee does not exist", 1);
         }
+        jFrame2.pack();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Refresh Table
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
+        refreshTable();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     // Cancel remove prompt
@@ -938,16 +952,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jDialog1.dispose();
     }//GEN-LAST:event_jButton12ActionPerformed
 
-    private void jTextField13KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyTyped
-        // TODO add your handling code here:
-        calcSalary();
-    }//GEN-LAST:event_jTextField13KeyTyped
-
-    private void jTextField11KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyTyped
-        // TODO add your handling code here:
-        calcSalary();
-    }//GEN-LAST:event_jTextField11KeyTyped
-
     // PTE
     private void jRadioButton3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jRadioButton3FocusGained
         // TODO add your handling code here:
@@ -958,10 +962,10 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel15.setVisible(true);
         jTextField12.setVisible(true);
         jTextField12.setText("0");
+        calcSalary();
         jFrame2.pack();
     }//GEN-LAST:event_jRadioButton3FocusGained
 
-    
     // FTE
     private void jRadioButton4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jRadioButton4FocusGained
         // TODO add your handling code here:
@@ -970,6 +974,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jTextField8.setVisible(false);
         jLabel15.setVisible(false);
         jTextField12.setVisible(false);
+        calcSalary();
         jFrame2.pack();
     }//GEN-LAST:event_jRadioButton4FocusGained
 
@@ -999,12 +1004,48 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void jTextField8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyPressed
+        // TODO add your handling code here:
+        calcSalary();
+    }//GEN-LAST:event_jTextField8KeyPressed
+
+    private void jTextField12KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField12KeyPressed
+        // TODO add your handling code here:
+        calcSalary();
+    }//GEN-LAST:event_jTextField12KeyPressed
+
+    private void jTextField13KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyPressed
+        // TODO add your handling code here:
+        calcSalary();
+    }//GEN-LAST:event_jTextField13KeyPressed
+
+    private void jTextField11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyPressed
+        // TODO add your handling code here:
+        calcSalary();
+    }//GEN-LAST:event_jTextField11KeyPressed
+
     // Recalculates salary after deductions
     private void calcSalary(){
+        Double deductionRate = 0.0;
+        Double salary = 0.0;
+        if(!jTextField11.getText().equals("")){
+            deductionRate = Double.parseDouble(jTextField11.getText());
+        }
+        if(!jTextField13.getText().equals("")){
+            salary = Double.parseDouble(jTextField13.getText());
+        }
         if(jRadioButton3.isSelected()){
-            jLabel22.setText("$ " + Double.toString(Double.parseDouble(jTextField13.getText())*Double.parseDouble(jTextField8.getText())*Double.parseDouble(jTextField12.getText())*(1-Double.parseDouble(jTextField11.getText()))));
+            Double hpw = 0.0;
+            Double wpy = 0.0;
+            if(!jTextField8.getText().equals("")){
+                hpw = Double.parseDouble(jTextField8.getText());
+            }
+            if(!jTextField12.getText().equals("")){
+                wpy = Double.parseDouble(jTextField12.getText());
+            }
+            jLabel22.setText("$ " + Double.toString(salary*hpw*wpy*(1-deductionRate)));
         } else{
-            jLabel22.setText("$ " + Double.toString(Double.parseDouble(jTextField13.getText())*(1-Double.parseDouble(jTextField11.getText()))));
+            jLabel22.setText("$ " + Double.toString(salary*(1-deductionRate)));
         }
     }
     
